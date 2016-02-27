@@ -6,8 +6,14 @@
 
 - name: add docker repository
   sudo: yes
-  action: apt_repository repo="deb https://apt.dockerproject.org/repo ubuntu-trusty main" state=present update_cache=yes 
-  when: "ansible_distribution_version in ['14.04']"  
+  action: apt_repository repo="deb https://apt.dockerproject.org/repo ubuntu-{{ansible_lsb.codename}} main" state=present update_cache=yes 
+  when: "ansible_distribution == 'Ubuntu'"
+  tags: docker
+
+- name: add docker repository
+  sudo: yes
+  action: apt_repository repo="deb https://apt.dockerproject.org/repo debian-{{ansible_lsb.codename}} main" state=present update_cache=yes 
+  when: "ansible_distribution == 'Debian'"
   tags: docker
 
 - name: install docker
