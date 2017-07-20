@@ -1,4 +1,11 @@
 ---
+- name: add apt-transport-https for prereq
+  sudo: yes
+  action: apt pkg="{{item}}" state=present update_cache=yes
+  with_items:
+      - "apt-transport-https"
+  tags: docker-prereq
+
 - name: add docker apt key
   sudo: yes 
   action: apt_key keyserver=hkp://pgp.mit.edu:80 id=58118E89F3A912897C070ADBF76221572C52609D state=present 
